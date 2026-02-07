@@ -7,8 +7,8 @@ export default function Home() {
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
     const [view, setView] = useState('dashboard'); // 'dashboard' or 'report'
-    const [reportData, setReportData] = useState(null);
     const [loadingReport, setLoadingReport] = useState(false);
+    const [newTaskText, setNewTaskText] = useState('');
 
     useEffect(() => {
         const savedProjects = JSON.parse(localStorage.getItem('katha_projects') || '[]');
@@ -18,6 +18,11 @@ export default function Home() {
         }
     }, []);
 
+    const saveProjects = (updatedProjects) => {
+        setProjects(updatedProjects);
+        localStorage.setItem('katha_projects', JSON.stringify(updatedProjects));
+    };
+
     const handleProjectClick = (project) => {
         setSelectedProject(project);
         setView('dashboard');
@@ -25,23 +30,83 @@ export default function Home() {
 
     const handleProgressClick = async (project) => {
         setSelectedProject(project);
-        setLoadingReport(true);
         setView('report');
+
+        // Check if project already has a report
+        if (project.tasks && project.tasks.length > 0) {
+            return;
+        }
+
+        setLoadingReport(true);
         try {
             const data = await generateProjectReport(project.content);
-            setReportData(data);
+            const taskObjects = data.tasks.map(t => ({ text: t, completed: false }));
+
+            const updatedProjects = projects.map(p =>
+                p.id === project.id
+                    ? { ...p, tasks: taskObjects, budget: data.budget }
+                    : p
+            );
+
+            saveProjects(updatedProjects);
+            setSelectedProject(updatedProjects.find(p => p.id === project.id));
         } catch (error) {
             console.error('Failed to generate report:', error);
-            setReportData({ tasks: ["Error generating tasks"], budget: 0 });
         } finally {
             setLoadingReport(false);
         }
     };
 
-    const toggleTask = (index) => {
-        const newTasks = [...reportData.tasks];
-        // In a real app, we'd have a checked state. Here we'll just toggle a dummy state
-        setReportData({ ...reportData, tasks: newTasks });
+    const toggleTask = (taskIndex) => {
+        const updatedProjects = projects.map(p => {
+            if (p.id === selectedProject.id) {
+                const newTasks = [...p.tasks];
+                newTasks[taskIndex].completed = !newTasks[taskIndex].completed;
+
+                // Calculate new progress
+                const completedCount = newTasks.filter(t => t.completed).length;
+                const progress = Math.round((completedCount / newTasks.length) * 100);
+
+                return { ...p, tasks: newTasks, progress1: progress };
+            }
+            return p;
+        });
+
+        saveProjects(updatedProjects);
+        setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
+    };
+
+    const addTask = () => {
+        if (!newTaskText.trim()) return;
+
+        const updatedProjects = projects.map(p => {
+            if (p.id === selectedProject.id) {
+                const newTasks = [...(p.tasks || []), { text: newTaskText, completed: false }];
+                const completedCount = newTasks.filter(t => t.completed).length;
+                const progress = Math.round((completedCount / newTasks.length) * 100);
+                return { ...p, tasks: newTasks, progress1: progress };
+            }
+            return p;
+        });
+
+        saveProjects(updatedProjects);
+        setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
+        setNewTaskText('');
+    };
+
+    const deleteTask = (index) => {
+        const updatedProjects = projects.map(p => {
+            if (p.id === selectedProject.id) {
+                const newTasks = p.tasks.filter((_, i) => i !== index);
+                const completedCount = newTasks.filter(t => t.completed).length;
+                const progress = newTasks.length > 0 ? Math.round((completedCount / newTasks.length) * 100) : 0;
+                return { ...p, tasks: newTasks, progress1: progress };
+            }
+            return p;
+        });
+
+        saveProjects(updatedProjects);
+        setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
     };
 
     return (
@@ -107,13 +172,13 @@ export default function Home() {
                     <div className="report-view">
                         <div className="report-header" onClick={() => setView('dashboard')}>
                             <span>&lt;</span>
-                            <span>Project Report</span>
+                            <span>Project Report - {selectedProject.title}</span>
                         </div>
 
                         {loadingReport ? (
                             <div className="loading">
                                 <div className="spinner"></div>
-                                <span>Generating production report...</span>
+                                <span>Analyzing script and generating production tasks...</span>
                             </div>
                         ) : (
                             <div className="report-grid">
@@ -123,23 +188,51 @@ export default function Home() {
                                         <span>TASK LIST</span>
                                         <span style={{ marginLeft: 'auto' }}>↓</span>
                                     </div>
-                                    {reportData?.tasks.map((task, i) => (
+                                    {selectedProject.tasks?.map((task, i) => (
                                         <div key={i} className="task-item">
-                                            <div className="task-checkbox" onClick={() => toggleTask(i)}></div>
-                                            <span>{task}</span>
-                                            <span style={{ marginLeft: 'auto', opacity: 0.5 }}>...</span>
+                                            <div
+                                                className={`task-checkbox ${task.completed ? 'checked' : ''}`}
+                                                onClick={() => toggleTask(i)}
+                                            ></div>
+                                            <span style={{ textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.6 : 1 }}>
+                                                {task.text}
+                                            </span>
+                                            <span
+                                                style={{ marginLeft: 'auto', cursor: 'pointer', opacity: 0.5 }}
+                                                onClick={() => deleteTask(i)}
+                                            >🗑️</span>
                                         </div>
                                     ))}
-                                    <div className="add-task">+ Add Task</div>
+                                    <div className="add-task" style={{ display: 'flex', gap: '1rem' }}>
+                                        <input
+                                            type="text"
+                                            placeholder="Add Task"
+                                            value={newTaskText}
+                                            onChange={(e) => setNewTaskText(e.target.value)}
+                                            onKeyPress={(e) => e.key === 'Enter' && addTask()}
+                                            style={{
+                                                background: 'transparent',
+                                                border: 'none',
+                                                borderBottom: '1px solid var(--brown)',
+                                                outline: 'none',
+                                                flex: 1,
+                                                color: 'var(--brown)'
+                                            }}
+                                        />
+                                        <span onClick={addTask} style={{ cursor: 'pointer' }}>+</span>
+                                    </div>
                                 </div>
 
                                 <div className="budget-container">
                                     <div className="budget-card">
                                         <div className="budget-header">BUDGET ESTIMATED</div>
                                         <div className="budget-value">
-                                            <span>$ {reportData?.budget || 20000}</span>
+                                            <span>$ {selectedProject.budget || 0}</span>
                                             <span className="budget-arrow">∨</span>
                                         </div>
+                                    </div>
+                                    <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--dark-brown)', opacity: 0.7 }}>
+                                        * Budget estimated by AI based on script complexity and content.
                                     </div>
                                 </div>
                             </div>
