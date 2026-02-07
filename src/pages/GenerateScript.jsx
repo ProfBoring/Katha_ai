@@ -99,6 +99,15 @@ export default function GenerateScript() {
                                 <option>Sci-Fi</option>
                                 <option>Horror</option>
                                 <option>Thriller</option>
+                                <option>Action</option>
+                                <option>Romance</option>
+                                <option>Mystery</option>
+                                <option>Fantasy</option>
+                                <option>Documentary</option>
+                                <option>Western</option>
+                                <option>Musical</option>
+                                <option>Noir</option>
+                                <option>Adventure</option>
                             </select>
                         </div>
 
@@ -113,6 +122,15 @@ export default function GenerateScript() {
                                 <option>Future</option>
                                 <option>Medieval</option>
                                 <option>Victorian</option>
+                                <option>Ancient Rome</option>
+                                <option>Renaissance</option>
+                                <option>1920s</option>
+                                <option>1950s</option>
+                                <option>1990s</option>
+                                <option>Prehistoric</option>
+                                <option>Cyberpunk Era</option>
+                                <option>World War II</option>
+                                <option>Wild West</option>
                             </select>
                         </div>
                     </div>
@@ -128,6 +146,14 @@ export default function GenerateScript() {
                                 <option>Stylized</option>
                                 <option>Poetic</option>
                                 <option>Fast-paced</option>
+                                <option>Slang-heavy</option>
+                                <option>Formal</option>
+                                <option>Minimalist</option>
+                                <option>Melodramatic</option>
+                                <option>Sarcastic</option>
+                                <option>Period-accurate</option>
+                                <option>Sorkin-esque</option>
+                                <option>Tarantino-esque</option>
                             </select>
                         </div>
 
