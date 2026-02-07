@@ -12,7 +12,7 @@ export default function GenerateScript() {
         timePeriod: 'Modern Day',
         dialogueStyle: 'Naturalistic',
         contentType: 'Feature Film',
-        length: 'medium'
+        length: 70
     });
 
     const [output, setOutput] = useState('');
@@ -150,7 +150,8 @@ export default function GenerateScript() {
                             className="slider"
                             min="0"
                             max="100"
-                            defaultValue="70"
+                            value={params.length}
+                            onChange={(e) => setParams({ ...params, length: parseInt(e.target.value) })}
                         />
                         <button
                             className="btn-primary"

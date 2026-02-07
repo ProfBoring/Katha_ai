@@ -14,7 +14,7 @@ export async function generateScript(params) {
 - Time Period: ${timePeriod}
 - Dialogue Style: ${dialogueStyle}
 - Content Type: ${contentType}
-- Length: ${length === 'short' ? 'Short (5-10 pages)' : length === 'medium' ? 'Medium (10-20 pages)' : 'Long (20+ pages)'}
+- Length/Detail Level: ${length}/100 (where 0 is very brief/short and 100 is extremely detailed/long)
 
 Format the script with proper scene headings (INT./EXT.), action lines, and character dialogue.`;
 
