@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import CharacterCard from '../components/CharacterCard';
 import AmbienceCard from '../components/AmbienceCard';
 import { generateScript, generateCharacters, generateAmbience } from '../services/groqService';
+import { exportToPDF, exportToWord } from '../utils/exportUtils';
 
 export default function GenerateScript() {
     const [params, setParams] = useState({
@@ -173,6 +174,14 @@ export default function GenerateScript() {
                 {output && (
                     <div className="output-section">
                         <h2 className="page-title">GENERATED SCRIPT</h2>
+                        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+                            <button className="btn-secondary" onClick={() => exportToPDF(params.title, output)} style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}>
+                                EXPORT PDF
+                            </button>
+                            <button className="btn-secondary" onClick={() => exportToWord(params.title, output)} style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}>
+                                EXPORT WORD
+                            </button>
+                        </div>
                         <div className="output-box">{output}</div>
 
                         {(characters.length > 0 || ambience.length > 0) && (

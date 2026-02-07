@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import CharacterCard from '../components/CharacterCard';
 import AmbienceCard from '../components/AmbienceCard';
 import { editScript, generateCharacters, generateAmbience } from '../services/groqService';
+import { exportToPDF, exportToWord } from '../utils/exportUtils';
 
 export default function EditScript() {
     const [script, setScript] = useState('');
@@ -60,6 +61,15 @@ export default function EditScript() {
                         value={script}
                         onChange={(e) => setScript(e.target.value)}
                     />
+
+                    <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+                        <button className="btn-secondary" onClick={() => exportToPDF('Edited Script', script)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                            EXPORT PDF
+                        </button>
+                        <button className="btn-secondary" onClick={() => exportToWord('Edited Script', script)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                            EXPORT WORD
+                        </button>
+                    </div>
 
                     <div className="form-row">
                         <input

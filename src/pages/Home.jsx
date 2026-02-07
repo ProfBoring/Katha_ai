@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import ProjectCard from '../components/ProjectCard';
 import { generateProjectReport } from '../services/groqService';
+import { exportToPDF, exportToWord } from '../utils/exportUtils';
 
 export default function Home() {
     const [projects, setProjects] = useState([]);
@@ -178,6 +179,14 @@ export default function Home() {
                                 overflow: 'hidden'
                             }}>
                                 <h1 className="page-title">SCRIPT PREVIEW: {selectedProject.title}</h1>
+                                <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+                                    <button className="btn-secondary" onClick={() => exportToPDF(selectedProject.title, selectedProject.content)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                                        EXPORT PDF
+                                    </button>
+                                    <button className="btn-secondary" onClick={() => exportToWord(selectedProject.title, selectedProject.content)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                                        EXPORT WORD
+                                    </button>
+                                </div>
                                 <div className="output-box" style={{
                                     flex: 1,
                                     overflowY: 'auto',
