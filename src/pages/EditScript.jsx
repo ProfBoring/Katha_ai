@@ -86,7 +86,14 @@ export default function EditScript() {
                                     <h3 className="cards-title">CHARACTER CARDS</h3>
                                     <div className="cards-grid">
                                         {characters.map((char, i) => (
-                                            <CharacterCard key={i} name={char.name} description={char.description} />
+                                            <CharacterCard
+                                                key={i}
+                                                name={char.name}
+                                                description={char.description}
+                                                traits={char.traits}
+                                                arc={char.arc}
+                                                colorPalette={char.colorPalette}
+                                            />
                                         ))}
                                     </div>
                                 </>

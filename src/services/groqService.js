@@ -56,13 +56,20 @@ export async function generateCharacters(script) {
         messages: [
             {
                 role: 'system',
-                content: 'Analyze the script and extract main characters. Return a JSON array with objects containing "name" and "description" fields. Only return the JSON array, no other text.'
+                content: `Analyze the script and extract main characters. Return a JSON array with objects containing:
+1. "name": The character's name.
+2. "description": A brief physical description.
+3. "traits": A list of key character traits.
+4. "arc": A brief summary of the character's emotional or narrative journey.
+5. "colorPalette": An array of 3-4 hex color codes that visually represent the character's vibe or aesthetic.
+
+Only return the JSON array, no other text.`
             },
             { role: 'user', content: script }
         ],
         model: 'llama-3.3-70b-versatile',
         temperature: 0.5,
-        max_tokens: 1024
+        max_tokens: 2048
     });
 
     try {

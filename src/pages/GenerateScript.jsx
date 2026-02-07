@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import { generateScript } from '../services/groqService';
+import CharacterCard from '../components/CharacterCard';
+import AmbienceCard from '../components/AmbienceCard';
+import { generateScript, generateCharacters, generateAmbience } from '../services/groqService';
 
 export default function GenerateScript() {
     const [params, setParams] = useState({
@@ -14,14 +16,29 @@ export default function GenerateScript() {
     });
 
     const [output, setOutput] = useState('');
+    const [characters, setCharacters] = useState([]);
+    const [ambience, setAmbience] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const handleGenerate = async () => {
         if (!params.prompt) return;
         setLoading(true);
+        setOutput('');
+        setCharacters([]);
+        setAmbience([]);
+
         try {
             const script = await generateScript(params);
             setOutput(script);
+
+            // Generate characters and ambience in parallel
+            const [charList, ambList] = await Promise.all([
+                generateCharacters(script),
+                generateAmbience(script)
+            ]);
+
+            setCharacters(charList);
+            setAmbience(ambList);
 
             // Persist to localStorage
             const savedProjects = JSON.parse(localStorage.getItem('katha_projects') || '[]');
@@ -29,9 +46,11 @@ export default function GenerateScript() {
                 id: Date.now(),
                 title: params.title || `UNTITLED ${savedProjects.length + 1}`,
                 content: script,
+                characters: charList,
+                ambience: ambList,
                 genre: params.genre,
                 timestamp: new Date().toISOString(),
-                progress1: Math.floor(Math.random() * 40) + 60, // Random progress for demo visuals
+                progress1: Math.floor(Math.random() * 40) + 60,
                 progress2: Math.floor(Math.random() * 40) + 40
             };
             localStorage.setItem('katha_projects', JSON.stringify([newProject, ...savedProjects]));
@@ -148,6 +167,39 @@ export default function GenerateScript() {
                     <div className="output-section">
                         <h2 className="page-title">GENERATED SCRIPT</h2>
                         <div className="output-box">{output}</div>
+
+                        {(characters.length > 0 || ambience.length > 0) && (
+                            <div className="cards-section" style={{ marginTop: '3rem' }}>
+                                {characters.length > 0 && (
+                                    <>
+                                        <h3 className="cards-title">CHARACTER CARDS</h3>
+                                        <div className="cards-grid">
+                                            {characters.map((char, i) => (
+                                                <CharacterCard
+                                                    key={i}
+                                                    name={char.name}
+                                                    description={char.description}
+                                                    traits={char.traits}
+                                                    arc={char.arc}
+                                                    colorPalette={char.colorPalette}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+
+                                {ambience.length > 0 && (
+                                    <>
+                                        <h3 className="cards-title" style={{ marginTop: '2.5rem' }}>AMBIENCE & SOUND DESIGN</h3>
+                                        <div className="cards-grid">
+                                            {ambience.map((amb, i) => (
+                                                <AmbienceCard key={i} title={amb.title} description={amb.description} />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        )}
                     </div>
                 )}
             </main>
