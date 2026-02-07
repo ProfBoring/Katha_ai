@@ -161,6 +161,24 @@ body {
   transform: translateY(-2px);
 }
 
+.btn-secondary {
+  padding: 0.6rem 1.5rem;
+  background-color: var(--tan);
+  color: var(--dark-brown);
+  border: 1px solid var(--brown);
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--brown);
+  color: white;
+}
+
 .auth-link {
   margin-top: 1.5rem;
   font-size: 0.9rem;
@@ -374,6 +392,8 @@ body {
   outline: none;
   cursor: pointer;
   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   min-width: 160px;
 }
 

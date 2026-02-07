@@ -180,10 +180,10 @@ export default function Home() {
                             }}>
                                 <h1 className="page-title">SCRIPT PREVIEW: {selectedProject.title}</h1>
                                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                                    <button className="btn-secondary" onClick={() => exportToPDF(selectedProject.title, selectedProject.content)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                                    <button className="btn-secondary" onClick={() => exportToPDF(selectedProject.title, selectedProject.content)}>
                                         EXPORT PDF
                                     </button>
-                                    <button className="btn-secondary" onClick={() => exportToWord(selectedProject.title, selectedProject.content)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                                    <button className="btn-secondary" onClick={() => exportToWord(selectedProject.title, selectedProject.content)}>
                                         EXPORT WORD
                                     </button>
                                 </div>

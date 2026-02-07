@@ -63,10 +63,10 @@ export default function EditScript() {
                     />
 
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
-                        <button className="btn-secondary" onClick={() => exportToPDF('Edited Script', script)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                        <button className="btn-secondary" onClick={() => exportToPDF('Edited Script', script)}>
                             EXPORT PDF
                         </button>
-                        <button className="btn-secondary" onClick={() => exportToWord('Edited Script', script)} style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>
+                        <button className="btn-secondary" onClick={() => exportToWord('Edited Script', script)}>
                             EXPORT WORD
                         </button>
                     </div>

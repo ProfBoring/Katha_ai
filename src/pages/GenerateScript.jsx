@@ -201,10 +201,10 @@ export default function GenerateScript() {
                     <div className="output-section">
                         <h2 className="page-title">GENERATED SCRIPT</h2>
                         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                            <button className="btn-secondary" onClick={() => exportToPDF(params.title, output)} style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}>
+                            <button className="btn-secondary" onClick={() => exportToPDF(params.title, output)}>
                                 EXPORT PDF
                             </button>
-                            <button className="btn-secondary" onClick={() => exportToWord(params.title, output)} style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}>
+                            <button className="btn-secondary" onClick={() => exportToWord(params.title, output)}>
                                 EXPORT WORD
                             </button>
                         </div>
