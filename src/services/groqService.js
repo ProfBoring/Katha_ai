@@ -14,7 +14,7 @@ export async function generateScript(params) {
 - Time Period: ${timePeriod}
 - Dialogue Style: ${dialogueStyle}
 - Content Type: ${contentType}
-- Length/Detail Level: ${length}/100 (where 0 is very brief/short and 100 is extremely detailed/long)
+- Estimated Duration: ${length} minutes (Ensure the script length corresponds to this duration, typically ~1 page per minute)
 
 Format the script with proper scene headings (INT./EXT.), action lines, and character dialogue.`;
 

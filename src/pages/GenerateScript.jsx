@@ -12,7 +12,7 @@ export default function GenerateScript() {
         timePeriod: 'Modern Day',
         dialogueStyle: 'Naturalistic',
         contentType: 'Feature Film',
-        length: 70
+        length: 30 // Default to 30 minutes
     });
 
     const [output, setOutput] = useState('');
@@ -144,22 +144,29 @@ export default function GenerateScript() {
                         </div>
                     </div>
 
-                    <div className="slider-container">
-                        <input
-                            type="range"
-                            className="slider"
-                            min="0"
-                            max="100"
-                            value={params.length}
-                            onChange={(e) => setParams({ ...params, length: parseInt(e.target.value) })}
-                        />
-                        <button
-                            className="btn-primary"
-                            onClick={handleGenerate}
-                            disabled={loading}
-                        >
-                            {loading ? <div className="spinner"></div> : 'GENERATE'}
-                        </button>
+                    <div className="slider-container" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-start' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', color: 'var(--brown)', fontWeight: 600 }}>
+                            <span>Duration</span>
+                            <span>{params.length} mins</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: '1.5rem', width: '100%', alignItems: 'center' }}>
+                            <input
+                                type="range"
+                                className="slider"
+                                min="1"
+                                max="120"
+                                value={params.length}
+                                onChange={(e) => setParams({ ...params, length: parseInt(e.target.value) })}
+                                style={{ flex: 1 }}
+                            />
+                            <button
+                                className="btn-primary"
+                                onClick={handleGenerate}
+                                disabled={loading}
+                            >
+                                {loading ? <div className="spinner"></div> : 'GENERATE'}
+                            </button>
+                        </div>
                     </div>
                 </div>
 
