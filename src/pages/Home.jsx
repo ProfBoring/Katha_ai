@@ -147,7 +147,22 @@ export default function Home() {
                 {view === 'dashboard' ? (
                     <div style={{ display: 'flex', gap: '2rem', height: 'calc(100vh - 4rem)' }}>
                         <div style={{ flex: '0 0 500px', overflowY: 'auto', paddingRight: '1rem' }}>
-                            <h1 className="page-title">PROJECTS</h1>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                                <h1 className="page-title" style={{ margin: 0 }}>PROJECTS</h1>
+                                <button
+                                    className="btn-secondary"
+                                    onClick={() => navigate('/generate')}
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.5rem',
+                                        padding: '0.5rem 1rem'
+                                    }}
+                                >
+                                    <span style={{ fontSize: '1.2rem' }}>+</span>
+                                    <span>New Project</span>
+                                </button>
+                            </div>
                             <div className="projects-list">
                                 {projects.length > 0 ? (
                                     projects.map((project) => (
