@@ -40,8 +40,8 @@ export default function Home() {
         setSelectedProject(project);
         setView('report');
 
-        // Check if project already has a report
-        if (project.tasks && project.tasks.length > 0) {
+        // Check if project already has a report with the new breakdown structure
+        if (project.tasks && project.tasks.length > 0 && project.breakdown && project.breakdown.length > 0) {
             return;
         }
 
