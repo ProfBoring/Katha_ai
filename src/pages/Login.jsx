@@ -40,6 +40,13 @@ export default function Login() {
             {/* Auth Section */}
             <section className="auth-section" ref={authRef}>
                 <div className="auth-container">
+                    <h2 style={{
+                        fontSize: '3.5rem',
+                        fontFamily: 'Courier New, Courier, monospace',
+                        marginBottom: '4rem',
+                        fontWeight: 400,
+                        textAlign: 'center'
+                    }}>Where Stories Begin</h2>
                     <h1 className="auth-title">LOGIN</h1>
 
                     <form className="auth-form" onSubmit={handleSubmit}>

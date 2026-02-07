@@ -28,6 +28,7 @@ body {
   height: 100vh;
   overflow-y: auto;
   scroll-behavior: smooth;
+  background-color: var(--bg-cream);
 }
 
 .video-section {
