@@ -22,6 +22,20 @@ export default function GenerateScript() {
         try {
             const script = await generateScript(params);
             setOutput(script);
+
+            // Persist to localStorage
+            const savedProjects = JSON.parse(localStorage.getItem('katha_projects') || '[]');
+            const newProject = {
+                id: Date.now(),
+                title: params.title || `UNTITLED ${savedProjects.length + 1}`,
+                content: script,
+                genre: params.genre,
+                timestamp: new Date().toISOString(),
+                progress1: Math.floor(Math.random() * 40) + 60, // Random progress for demo visuals
+                progress2: Math.floor(Math.random() * 40) + 40
+            };
+            localStorage.setItem('katha_projects', JSON.stringify([newProject, ...savedProjects]));
+
         } catch (error) {
             console.error('Generation failed:', error);
             setOutput('Failed to generate script. Please check your API key or try again.');
