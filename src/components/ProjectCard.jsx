@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function ProjectCard({ title, progress1, progress2, onRename, onDelete, onProgressClick }) {
+export default function ProjectCard({ title, progress1, onRename, onDelete, onProgressClick }) {
     const [showMenu, setShowMenu] = useState(false);
 
     return (
@@ -101,12 +101,6 @@ export default function ProjectCard({ title, progress1, progress2, onRename, onD
                         <div className="progress-fill" style={{ width: `${progress1}%` }}></div>
                     </div>
                     <span style={{ fontSize: '0.9rem', fontWeight: 600, minWidth: '40px' }}>{progress1}%</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div className="progress-bar" style={{ flex: 1 }}>
-                        <div className="progress-fill" style={{ width: `${progress2}%` }}></div>
-                    </div>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 600, minWidth: '40px' }}>{progress2}%</span>
                 </div>
             </div>
         </div>

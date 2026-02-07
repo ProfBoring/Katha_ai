@@ -50,8 +50,7 @@ export default function GenerateScript() {
                 ambience: ambList,
                 genre: params.genre,
                 timestamp: new Date().toISOString(),
-                progress1: 0,
-                progress2: Math.floor(Math.random() * 40) + 40
+                progress1: 0
             };
             localStorage.setItem('katha_projects', JSON.stringify([newProject, ...savedProjects]));
 

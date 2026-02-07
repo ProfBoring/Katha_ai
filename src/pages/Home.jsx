@@ -158,7 +158,6 @@ export default function Home() {
                                             <ProjectCard
                                                 title={project.title}
                                                 progress1={project.progress1}
-                                                progress2={project.progress2}
                                                 onProgressClick={() => handleProgressClick(project)}
                                                 onRename={() => handleRename(project)}
                                                 onDelete={() => handleDelete(project)}
