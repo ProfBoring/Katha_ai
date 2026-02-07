@@ -32,9 +32,6 @@ export default function Login() {
                     <source src="/intro_video.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
-                <div className="scroll-indicator" onClick={scrollToAuth}>
-                    ↓
-                </div>
             </section>
 
             {/* Auth Section */}
