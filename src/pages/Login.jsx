@@ -27,6 +27,7 @@ export default function Login() {
                     muted
                     playsInline
                     id="intro-video"
+                    preload="auto"
                 >
                     <source src="/intro_video.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
