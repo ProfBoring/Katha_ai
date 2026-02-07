@@ -96,3 +96,30 @@ export async function generateAmbience(script) {
         return [];
     }
 }
+
+export async function generateProjectReport(script) {
+    const completion = await groq.chat.completions.create({
+        messages: [
+            {
+                role: 'system',
+                content: `Analyze the script and generate a production report in JSON format.
+Include:
+1. "tasks": An array of strings representing production tasks (e.g., "Finalize script", "Location scouting").
+2. "budget": A single number (integer) representing an estimated production budget in USD.
+Only return the JSON object.`
+            },
+            { role: 'user', content: script }
+        ],
+        model: 'llama-3.3-70b-versatile',
+        temperature: 0.6,
+        max_tokens: 1024
+    });
+
+    try {
+        const content = completion.choices[0]?.message?.content || '{}';
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        return jsonMatch ? JSON.parse(jsonMatch[0]) : { tasks: [], budget: 0 };
+    } catch {
+        return { tasks: [], budget: 0 };
+    }
+}

@@ -455,3 +455,112 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* Project Report Styles */
+.report-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.report-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.report-grid {
+  display: flex;
+  gap: 3rem;
+}
+
+.task-list-container {
+  flex: 1;
+  background-color: var(--tan);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 500px;
+}
+
+.task-list-header {
+  padding: 1.25rem;
+  background-color: rgba(156, 123, 92, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.task-item {
+  padding: 1.25rem;
+  border-bottom: 1px solid rgba(156, 123, 92, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--brown);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.task-checkbox.checked::after {
+  content: '✓';
+  font-size: 12px;
+  color: var(--brown);
+}
+
+.add-task {
+  padding: 1.25rem;
+  color: #D37D6B;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.budget-container {
+  width: 300px;
+}
+
+.budget-card {
+  background-color: var(--tan);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.budget-header {
+  padding: 1rem;
+  background-color: rgba(156, 123, 92, 0.2);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.budget-value {
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.budget-arrow {
+  font-size: 0.8rem;
+  color: var(--dark-brown);
+}
