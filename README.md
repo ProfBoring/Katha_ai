@@ -2,7 +2,7 @@
 
 Katha is a powerful AI-driven script generation and editing tool developed for hackathons. It leverages the Groq LLM API to generate high-quality screenplays, character cards, and ambience/sound design suggestions based on simple user prompts.
 
-## ✨ Features
+##  Features
 
 - **AI Script Generation**: Generate full scripts with customizable parameters (Genre, Time Period, Dialogue Style, Content Type).
 - **Interactive Editor**: Import existing scripts and apply AI-driven edits to refine the content.
@@ -10,13 +10,13 @@ Katha is a powerful AI-driven script generation and editing tool developed for h
 - **Ambience & Sound Design**: Generates contextual sound design suggestions for your scenes.
 - **Premium UI**: A warm, aesthetic design inspired by traditional storytelling, built with React and Vite.
 
-## 🎨 Design Palette
+##  Design Palette
 
 - **Background**: `#F1E9D2` (Antique White)
 - **Primary Components**: `#D6BFA6` (Sandstone)
 - **Accents**: `#9C7B5C` (Earth Brown)
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -44,13 +44,13 @@ Katha is a powerful AI-driven script generation and editing tool developed for h
    npm run dev
    ```
 
-## 🛠️ Built With
+##  Built With
 
 - [React](https://reactjs.org/)
 - [Vite](https://vitejs.dev/)
 - [Groq SDK](https://groq.com/)
 - [React Router](https://reactrouter.com/)
 
-## 📜 License
+## License
 
 Distributed under the MIT License.
