@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import ProjectCard from '../components/ProjectCard';
 import { generateProjectReport } from '../services/groqService';
 import { exportToPDF, exportToWord } from '../utils/exportUtils';
 
 export default function Home() {
+    const navigate = useNavigate();
     const [projects, setProjects] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
     const [view, setView] = useState('dashboard'); // 'dashboard' or 'report'
