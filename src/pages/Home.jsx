@@ -109,13 +109,36 @@ export default function Home() {
         setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
     };
 
+    const handleRename = (project) => {
+        const newName = prompt('Enter new project title:', project.title);
+        if (newName && newName.trim()) {
+            const updatedProjects = projects.map(p =>
+                p.id === project.id ? { ...p, title: newName.trim() } : p
+            );
+            saveProjects(updatedProjects);
+            if (selectedProject?.id === project.id) {
+                setSelectedProject({ ...selectedProject, title: newName.trim() });
+            }
+        }
+    };
+
+    const handleDelete = (project) => {
+        if (confirm(`Are you sure you want to delete "${project.title}"?`)) {
+            const updatedProjects = projects.filter(p => p.id !== project.id);
+            saveProjects(updatedProjects);
+            if (selectedProject?.id === project.id) {
+                setSelectedProject(updatedProjects.length > 0 ? updatedProjects[0] : null);
+            }
+        }
+    };
+
     return (
         <div className="app-layout">
             <Sidebar />
             <main className="main-content">
                 {view === 'dashboard' ? (
                     <div style={{ display: 'flex', gap: '2rem', height: 'calc(100vh - 4rem)' }}>
-                        <div style={{ flex: '0 0 350px', overflowY: 'auto', paddingRight: '1rem' }}>
+                        <div style={{ flex: '0 0 500px', overflowY: 'auto', paddingRight: '1rem' }}>
                             <h1 className="page-title">PROJECTS</h1>
                             <div className="projects-list">
                                 {projects.length > 0 ? (
@@ -137,10 +160,8 @@ export default function Home() {
                                                 progress1={project.progress1}
                                                 progress2={project.progress2}
                                                 onProgressClick={() => handleProgressClick(project)}
-                                                onMenuClick={(e) => {
-                                                    e.stopPropagation();
-                                                    console.log('Menu clicked for', project.title);
-                                                }}
+                                                onRename={() => handleRename(project)}
+                                                onDelete={() => handleDelete(project)}
                                             />
                                         </div>
                                     ))
