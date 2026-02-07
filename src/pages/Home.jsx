@@ -10,6 +10,13 @@ export default function Home() {
     const [view, setView] = useState('dashboard'); // 'dashboard' or 'report'
     const [loadingReport, setLoadingReport] = useState(false);
     const [newTaskText, setNewTaskText] = useState('');
+    const [showBudgetBreakdown, setShowBudgetBreakdown] = useState(false);
+
+    const formatINR = (amount) => {
+        return new Intl.NumberFormat('en-IN', {
+            maximumFractionDigits: 0
+        }).format(amount);
+    };
 
     useEffect(() => {
         const savedProjects = JSON.parse(localStorage.getItem('katha_projects') || '[]');
@@ -45,7 +52,7 @@ export default function Home() {
 
             const updatedProjects = projects.map(p =>
                 p.id === project.id
-                    ? { ...p, tasks: taskObjects, budget: data.budget }
+                    ? { ...p, tasks: taskObjects, budget: data.totalBudgetINR, breakdown: data.breakdown }
                     : p
             );
 
@@ -253,12 +260,35 @@ export default function Home() {
                                 </div>
 
                                 <div className="budget-container">
-                                    <div className="budget-card">
+                                    <div className="budget-card" style={{ cursor: 'pointer' }} onClick={() => setShowBudgetBreakdown(!showBudgetBreakdown)}>
                                         <div className="budget-header">BUDGET ESTIMATED</div>
                                         <div className="budget-value">
-                                            <span>$ {selectedProject.budget || 0}</span>
-                                            <span className="budget-arrow">∨</span>
+                                            <span style={{ fontSize: '1.2rem', fontWeight: 600 }}>₹ {formatINR(selectedProject.budget || 0)}</span>
+                                            <span
+                                                className="budget-arrow"
+                                                style={{
+                                                    transform: showBudgetBreakdown ? 'rotate(180deg)' : 'rotate(0deg)',
+                                                    transition: 'transform 0.3s'
+                                                }}
+                                            >∨</span>
                                         </div>
+
+                                        {showBudgetBreakdown && selectedProject.breakdown && (
+                                            <div style={{ padding: '0 1rem 1rem', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                                                {selectedProject.breakdown.map((item, idx) => (
+                                                    <div key={idx} style={{
+                                                        display: 'flex',
+                                                        justifyContent: 'space-between',
+                                                        fontSize: '0.8rem',
+                                                        marginTop: '0.75rem',
+                                                        color: 'var(--dark-brown)'
+                                                    }}>
+                                                        <span>{item.category}:</span>
+                                                        <span style={{ fontWeight: 600 }}>₹ {formatINR(item.amount)}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                     <div style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--dark-brown)', opacity: 0.7 }}>
                                         * Budget estimated by AI based on script complexity and content.

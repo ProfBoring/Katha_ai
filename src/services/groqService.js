@@ -111,22 +111,25 @@ export async function generateProjectReport(script) {
                 role: 'system',
                 content: `Analyze the script and generate a production report in JSON format.
 Include:
-1. "tasks": An array of strings representing production tasks (e.g., "Finalize script", "Location scouting").
-2. "budget": A single number (integer) representing an estimated production budget in USD.
-Only return the JSON object.`
+1. "tasks": An array of strings representing production tasks.
+2. "totalBudgetINR": A single number representing the total estimated production budget in Indian Rupees (INR).
+3. "breakdown": An array of objects, each with "category" (e.g., "Cast", "Location", "Equipment") and "amount" (number in INR).
+
+Ensure the categories cover typical production costs based on the script's scale. 
+Only return the JSON object, no other text.`
             },
             { role: 'user', content: script }
         ],
         model: 'llama-3.3-70b-versatile',
         temperature: 0.6,
-        max_tokens: 1024
+        max_tokens: 1536
     });
 
     try {
         const content = completion.choices[0]?.message?.content || '{}';
         const jsonMatch = content.match(/\{[\s\S]*\}/);
-        return jsonMatch ? JSON.parse(jsonMatch[0]) : { tasks: [], budget: 0 };
+        return jsonMatch ? JSON.parse(jsonMatch[0]) : { tasks: [], totalBudgetINR: 0, breakdown: [] };
     } catch {
-        return { tasks: [], budget: 0 };
+        return { tasks: [], totalBudgetINR: 0, breakdown: [] };
     }
 }

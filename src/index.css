@@ -48,37 +48,6 @@ body {
   object-fit: cover;
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-size: 2rem;
-  animation: bounce 2s infinite;
-  cursor: pointer;
-  z-index: 10;
-}
-
-@keyframes bounce {
-
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0) translateX(-50%);
-  }
-
-  40% {
-    transform: translateY(-10px) translateX(-50%);
-  }
-
-  60% {
-    transform: translateY(-5px) translateX(-50%);
-  }
-}
-
 .auth-section {
   min-height: 100vh;
   background-color: var(--bg-cream);
