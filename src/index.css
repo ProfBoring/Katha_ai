@@ -416,6 +416,7 @@ body {
 }
 
 .slider {
+  appearance: none;
   -webkit-appearance: none;
   width: 150px;
   height: 4px;

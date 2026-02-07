@@ -1,11 +1,19 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-user">
+      <div
+        className="sidebar-user"
+        onClick={() => navigate('/')}
+        style={{ cursor: 'pointer', transition: 'opacity 0.2s' }}
+        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
+        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+        title="Logout"
+      >
         <div className="sidebar-user-icon">👤</div>
         <span>Katha</span>
       </div>
